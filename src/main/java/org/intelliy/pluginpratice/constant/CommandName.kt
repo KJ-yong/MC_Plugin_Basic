@@ -1,0 +1,12 @@
+package org.intelliy.pluginpratice.constant
+
+const val CHANGE_NICKNAME = "ninkchange"
+const val CHANGE_NICKNAME_KO = "닉네임변경"
+
+const val CHANGE_PREFIX = "addprefix"
+const val CHANGE_PREFIX_KO = "칭호추가"
+
+const val PREFIX = "prefix"
+const val PREFIX_KO = "칭호"
+const val PREFIX_KO_2 = "칭호보기"
+const val PREFIX_KO_3 = "칭호목록"

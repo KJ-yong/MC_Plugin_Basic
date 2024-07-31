@@ -1,0 +1,46 @@
+name: y_plugin
+version: '${version}'
+main: org.intelliy.pluginpratice.Main
+api-version: '1.20'
+prefix: "[Y's plugin]"
+commands:
+  ninkchange:
+    description: 닉네임을 변경합니다.
+    aliases:
+      - 닉네임변경
+    permission: y_plugin.nickchange
+    permission-message: 해당 명령어를 사용할 권한이 없습니다.
+
+  addprefix:
+    description: 대상에게 칭호를 추가합니다.
+    aliases:
+      - 칭호추가
+    permission: y_plugin.setprefix
+
+  prefix:
+    description: 보유중인 칭호 목록을 확인합니다.
+    aliases:
+      - 칭호
+      - 칭호목록
+      - 칭호보기
+    permission: y_plugin.showprefix
+
+permissions:
+  y_plugin.nickchange:
+    description: nickchange 권한
+    default: op
+
+  y_plugin.setprefix:
+    description: setprefix 권한
+    default: op
+
+  y_plugin.showprefix:
+    description: prefix 권한
+    default: not op
+
+  y_plugin.*:
+    default: op
+    children:
+      y_plugin.nickchange: true
+      y_plugin.setprefix: true
+      y_plugin.showprefix: true
