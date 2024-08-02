@@ -37,6 +37,8 @@ java {
     }
 }
 
+def pluginVersion = '1.0.0'
+
 tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
@@ -63,8 +65,9 @@ compileTestKotlin {
 }
 
 shadowJar{
-    archivesBaseName = 'y_plugin'
-    destinationDirectory = file("C:\\Users\\jy929\\source\\minecraft\\pluginPratice")
+    archivesBaseName = 'y_plugin_basic'
+    archiveVersion.set(pluginVersion)
+    destinationDirectory = file(projectDir)
     manifest {
         attributes 'Main-Class': 'org.intelliy.pluginpratice.Main'
     }

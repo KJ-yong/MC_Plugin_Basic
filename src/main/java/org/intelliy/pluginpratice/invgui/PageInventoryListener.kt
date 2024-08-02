@@ -63,7 +63,6 @@ abstract class PageInventoryListener(private val inventoryName: String): Listene
     @EventHandler
     fun onItemClick(event: InventoryClickEvent) {
         if (event.view.title() != inventoryName.toColoredComponent()) {
-            log("inventory click not.")
             return
         }
         val currentPage = event.clickedInventory?.getItem(49)?.let { item ->
