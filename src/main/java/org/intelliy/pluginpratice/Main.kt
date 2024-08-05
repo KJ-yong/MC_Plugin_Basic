@@ -4,13 +4,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import org.bukkit.plugin.java.JavaPlugin
-import org.intelliy.pluginpratice.command.ChangeNickName
-import org.intelliy.pluginpratice.command.AddPrefix
-import org.intelliy.pluginpratice.command.ShowPrefix
-import org.intelliy.pluginpratice.constant.CHANGE_NICKNAME
-import org.intelliy.pluginpratice.constant.CHANGE_PREFIX
-import org.intelliy.pluginpratice.constant.PREFIX
-import org.intelliy.pluginpratice.constant.USER_INFO_PATH
+import org.intelliy.pluginpratice.command.*
+import org.intelliy.pluginpratice.constant.*
 import org.intelliy.pluginpratice.event.PlayerJoinEventListener
 import org.intelliy.pluginpratice.invgui.PageInventoryListener
 import org.intelliy.pluginpratice.invgui.PrefixGuiListener
@@ -49,5 +44,7 @@ class Main : JavaPlugin() {
         server.getPluginCommand(CHANGE_NICKNAME)?.setExecutor(ChangeNickName)
         server.getPluginCommand(CHANGE_PREFIX)?.setExecutor(AddPrefix)
         server.getPluginCommand(PREFIX)?.setExecutor(ShowPrefix)
+        server.getPluginCommand(TELEPORT)?.setExecutor(Teleport)
+        server.getPluginCommand(OPEN_INVENTORY)?.setExecutor(OpenInventory)
     }
 }

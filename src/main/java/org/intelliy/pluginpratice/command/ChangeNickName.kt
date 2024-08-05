@@ -35,7 +35,7 @@ object ChangeNickName: CommandExecutor {
     }
 
     fun setNick(playerInfo: PlayerInfo) {
-        val nameComponent = if (playerInfo.currentPrefix.isNotBlank()) "${playerInfo.currentPrefix}&r ${playerInfo.displayNick}".toColoredComponent()
+        val nameComponent = if (playerInfo.currentPrefix.isNotBlank()) "${playerInfo.currentPrefix}&r ${playerInfo.displayNick}&r".toColoredComponent()
         else playerInfo.displayNick.toColoredComponent()
         playerInfo.player.displayName(nameComponent)
         playerInfo.player.playerListName(nameComponent)

@@ -20,6 +20,10 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.testng:testng:7.1.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+
     compileOnly "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
@@ -43,6 +47,10 @@ tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
     }
+}
+
+test {
+    useJUnitPlatform()
 }
 
 processResources {

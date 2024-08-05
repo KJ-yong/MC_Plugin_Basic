@@ -1,6 +1,7 @@
 package org.intelliy.pluginpratice.entity
 
 import org.bukkit.entity.Player
+import org.intelliy.pluginpratice.util.toColoredComponent
 
 data class PlayerInfo(
     val player: Player
@@ -15,7 +16,6 @@ data class PlayerInfo(
     var displayNick: String = player.name
     var currentPrefix: String = ""
     var prefixList = mutableListOf<String>()
-
     var money: String = "0"
         set(value) {
             try {
@@ -23,4 +23,6 @@ data class PlayerInfo(
                 field = value
             } catch (_: Exception) {}
         }
+
+    fun getSettingNick(): String = if (currentPrefix.isNotBlank()) "${currentPrefix}&r $displayNick&r" else "$displayNick&r"
 }

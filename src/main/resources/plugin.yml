@@ -25,6 +25,16 @@ commands:
       - 칭호보기
     permission: y_plugin.showprefix
 
+  tp:
+    description: 대상을 이동시키거나 대상에게 이동합니다.
+    permission: y_plugin.tp
+
+  openinv:
+    description: 대상의 인벤토리를 엽니다.
+    permission: y_plugin.openinv
+    aliases:
+      - 인벤토리
+
 permissions:
   y_plugin.nickchange:
     description: nickchange 권한
@@ -38,9 +48,19 @@ permissions:
     description: prefix 권한
     default: not op
 
+  y_plugin.tp:
+    description: tp 권한
+    default: op
+
+  y_plugin.openinv:
+    description: openinv 권한
+    default: op
+
   y_plugin.*:
     default: op
     children:
       y_plugin.nickchange: true
       y_plugin.setprefix: true
       y_plugin.showprefix: true
+      y_plugin.tp: true
+      y_plugin.openinv: true

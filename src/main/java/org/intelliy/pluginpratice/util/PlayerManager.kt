@@ -25,6 +25,12 @@ object PlayerManager {
 
     private fun playerSet(playerInfo: PlayerInfo) {
         playerInfo.player.displayName((if (playerInfo.currentPrefix.isNotBlank()) "${playerInfo.currentPrefix}&r ${playerInfo.displayNick}" else playerInfo.displayNick).toColoredComponent())
-        playerInfo.player.playerListName(playerInfo.displayNick.toColoredComponent())
+        playerInfo.player.playerListName((if (playerInfo.currentPrefix.isNotBlank()) "${playerInfo.currentPrefix}&r ${playerInfo.displayNick}" else playerInfo.displayNick).toColoredComponent())
+    }
+
+    fun findPlayer(name: String): PlayerInfo? {
+        val nameTarget = onLinePlayerList.find { it.player.name == name }
+        if (nameTarget != null) return nameTarget
+        return onLinePlayerList.find { it.displayNick.replace(Regex("&[0-9a-fk-or]"), "") == name }
     }
 }
