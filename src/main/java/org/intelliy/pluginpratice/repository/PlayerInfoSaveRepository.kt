@@ -26,4 +26,8 @@ object PlayerInfoSaveRepository {
     suspend fun addPrefix(uuid: UUID, prefix: String) {
         PlayerInfoSaveLocalDataSource.addPrefix(uuid.toString(), prefix)
     }
+
+    suspend fun saveMoney(uuid: UUID, money: Int) {
+        PlayerInfoSaveLocalDataSource.saveMoney(uuid.toString(), money)
+    }
 }

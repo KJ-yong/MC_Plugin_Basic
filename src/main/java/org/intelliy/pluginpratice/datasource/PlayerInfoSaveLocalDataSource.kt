@@ -7,6 +7,7 @@ import org.bukkit.entity.Player
 import org.intelliy.pluginpratice.Main
 import org.intelliy.pluginpratice.constant.USER_INFO_PATH
 import org.intelliy.pluginpratice.entity.PlayerInfo
+import org.intelliy.pluginpratice.util.log
 import java.io.File
 
 object PlayerInfoSaveLocalDataSource {
@@ -19,15 +20,15 @@ object PlayerInfoSaveLocalDataSource {
                     val infoYml = YamlConfiguration.loadConfiguration(userInfo)
                     playerInfo.displayNick = infoYml.get(PlayerInfo.DISPLAY_NICK) as String
                     playerInfo.currentPrefix = infoYml.get(PlayerInfo.CURRENT_PREFIX) as String
-                    playerInfo.money = infoYml.get(PlayerInfo.money) as String
+                    playerInfo.money = infoYml.getInt(PlayerInfo.money, 0)
                     playerInfo.prefixList.addAll(infoYml.getStringList(PlayerInfo.PREFIX_LIST))
                     playerInfo
                 } else {
-                    Main.instance.logger.info("Player info is not exist. UUID = ${player.uniqueId}")
+                    log("Player info is not exist. UUID = ${player.uniqueId}")
                     null
                 }
             } catch (e: Exception) {
-                Main.instance.logger.info("Read player info fail. UUID = ${player.uniqueId}")
+                log("Read player info fail. UUID = ${player.uniqueId}. exception = ${e.message}")
                 null
             }
         }
@@ -55,7 +56,7 @@ object PlayerInfoSaveLocalDataSource {
                 infoYml.set(PlayerInfo.DISPLAY_NICK, nick)
                 infoYml.save(playerInfoFile)
             } catch (e: Exception) {
-                Main.instance.logger.info("saveNick ${e.message}")
+                log("saveNick exception : ${e.message}")
             }
         }
     }
@@ -69,7 +70,7 @@ object PlayerInfoSaveLocalDataSource {
                 infoYml.set(PlayerInfo.CURRENT_PREFIX, prefix)
                 infoYml.save(playerInfoFile)
             } catch (e: Exception) {
-                Main.instance.logger.info("saveCurrentPrefix ${e.message}")
+                log("saveCurrentPrefix exception : ${e.message}")
             }
         }
     }
@@ -85,8 +86,20 @@ object PlayerInfoSaveLocalDataSource {
                 infoYml.set(PlayerInfo.PREFIX_LIST, prefixList)
                 infoYml.save(playerInfoFile)
             } catch (e: Exception) {
-                Main.instance.logger.info("addPrefix ${e.message}")
+                log("addPrefix exception : ${e.message}")
             }
+        }
+    }
+
+    suspend fun saveMoney(uuid: String, money: Int) {
+        val playerInfoFile = File("$USER_INFO_PATH$uuid.yml")
+        try {
+            if (!playerInfoFile.exists()) return
+            val infoYml = YamlConfiguration.loadConfiguration(playerInfoFile)
+            infoYml.set(PlayerInfo.money, money)
+            infoYml.save(playerInfoFile)
+        } catch (e: Exception) {
+            log("saveMoney exception : ${e.message}")
         }
     }
 }

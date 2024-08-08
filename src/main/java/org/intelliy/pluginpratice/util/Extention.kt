@@ -8,3 +8,4 @@ fun String.toColoredComponent(): Component = Component.text(ChatColor.translateA
 fun String.toColorString(): String = ChatColor.translateAlternateColorCodes('&', "$this&r")
 fun String.isDigitOnly(): Boolean = Regex("[0-9]+").matches(this)
 fun Component.toPlainString() = PlainTextComponentSerializer.plainText().serialize(this)
+fun String.toNonColorString() = this.replace(Regex("[&§][0-9a-fk-or]"), "")

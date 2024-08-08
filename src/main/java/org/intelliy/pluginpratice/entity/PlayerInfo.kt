@@ -1,7 +1,10 @@
 package org.intelliy.pluginpratice.entity
 
+import kotlinx.coroutines.launch
 import org.bukkit.entity.Player
-import org.intelliy.pluginpratice.util.toColoredComponent
+import org.intelliy.pluginpratice.Main
+import org.intelliy.pluginpratice.repository.PlayerInfoSaveRepository
+import org.intelliy.pluginpratice.util.toNonColorString
 
 data class PlayerInfo(
     val player: Player
@@ -16,13 +19,21 @@ data class PlayerInfo(
     var displayNick: String = player.name
     var currentPrefix: String = ""
     var prefixList = mutableListOf<String>()
-    var money: String = "0"
-        set(value) {
-            try {
-                value.toInt()
-                field = value
-            } catch (_: Exception) {}
-        }
+    var money: Int = 0
 
-    fun getSettingNick(): String = if (currentPrefix.isNotBlank()) "${currentPrefix}&r $displayNick&r" else "$displayNick&r"
+    fun getColoredNick(): String = if (currentPrefix.isNotBlank()) "${currentPrefix}&r $displayNick&r" else "$displayNick&r"
+    fun getNonColorNick(): String = displayNick.toNonColorString()
+    fun addMoney(addMoney: Int) {
+        money += addMoney
+        Main.ioScope.launch {
+            PlayerInfoSaveRepository.saveMoney(player.uniqueId, money)
+        }
+    }
+
+    fun minusMoney(minusMoney: Int) {
+        money -= minusMoney
+        Main.ioScope.launch {
+            PlayerInfoSaveRepository.saveMoney(player.uniqueId, money)
+        }
+    }
 }

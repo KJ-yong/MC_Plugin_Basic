@@ -8,6 +8,7 @@ import org.bukkit.entity.Player
 import org.intelliy.pluginpratice.constant.TELEPORT
 import org.intelliy.pluginpratice.util.PlayerManager
 import org.intelliy.pluginpratice.util.isDigitOnly
+import org.intelliy.pluginpratice.util.toColoredComponent
 
 object Teleport : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
@@ -19,12 +20,12 @@ object Teleport : CommandExecutor {
                 if (args.size == 1) {
                     if (sender !is Player) return false
                     sender.teleport(targetPlayer.player.location)
-                    sender.sendMessage("${targetPlayer.getSettingNick()}에게 이동하였습니다.")
+                    sender.sendMessage("${targetPlayer.getColoredNick()}에게 이동하였습니다.".toColoredComponent())
                 } else if (args.size == 2) {
                     val targetPlayer2 = PlayerManager.findPlayer(args[1])
                     if (targetPlayer2 != null) {
                         targetPlayer.player.teleport(targetPlayer2.player.location)
-                        sender.sendMessage("${targetPlayer.getSettingNick()}을(를) ${targetPlayer2.getSettingNick()}에게 이동하였습니다.")
+                        sender.sendMessage("${targetPlayer.getColoredNick()}을(를) ${targetPlayer2.getColoredNick()}에게 이동하였습니다.".toColoredComponent())
                     } else {
                         sender.sendMessage("대상을 찾을 수 없습니다.")
                     }

@@ -29,11 +29,26 @@ commands:
     description: 대상을 이동시키거나 대상에게 이동합니다.
     permission: y_plugin.tp
 
+  fly:
+    description: Fly
+    permission: y_plugin.fly
+
   openinv:
     description: 대상의 인벤토리를 엽니다.
     permission: y_plugin.openinv
     aliases:
       - 인벤토리
+  money:
+    description: 돈을 확인합니다.
+    permission: y_plugin.money
+    aliases:
+      - 돈
+
+  sendmoney:
+    description: 대상에게 돈을 보냅니다.
+    permission: y_plugin.sendmoney
+    aliases:
+      - 돈보내기
 
 permissions:
   y_plugin.nickchange:
@@ -56,6 +71,18 @@ permissions:
     description: openinv 권한
     default: op
 
+  y_plugin.fly:
+    description: fly 권한
+    default: op
+
+  y_plugin.money:
+    description: money 권한
+    default: not op
+
+  y_plugin.sendmoney:
+    description: sendmoney 권한
+    default: not op
+
   y_plugin.*:
     default: op
     children:
@@ -64,3 +91,6 @@ permissions:
       y_plugin.showprefix: true
       y_plugin.tp: true
       y_plugin.openinv: true
+      y_plugin.fly: true
+      y_plugin.money: true
+      y_plugin.sendmoney: true
