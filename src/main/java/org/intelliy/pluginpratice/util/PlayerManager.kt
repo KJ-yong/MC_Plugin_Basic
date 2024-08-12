@@ -35,8 +35,7 @@ object PlayerManager {
     }
 
     private fun playerSet(playerInfo: PlayerInfo) {
-        playerInfo.player.displayName((if (playerInfo.currentPrefix.isNotBlank()) "${playerInfo.currentPrefix}&r ${playerInfo.displayNick}" else playerInfo.displayNick).toColoredComponent())
-        playerInfo.player.playerListName((if (playerInfo.currentPrefix.isNotBlank()) "${playerInfo.currentPrefix}&r ${playerInfo.displayNick}" else playerInfo.displayNick).toColoredComponent())
+        playerInfo.setNick()
     }
 
     fun findPlayer(name: String): PlayerInfo? {

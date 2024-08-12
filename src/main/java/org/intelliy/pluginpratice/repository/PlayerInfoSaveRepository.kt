@@ -10,7 +10,7 @@ object PlayerInfoSaveRepository {
         PlayerInfoSaveLocalDataSource.saveNick(uuid.toString(), nick)
     }
 
-    suspend fun savePrefix(uuid: UUID, prefix: String) {
+    suspend fun saveCurrentPrefix(uuid: UUID, prefix: String) {
         PlayerInfoSaveLocalDataSource.saveCurrentPrefix(uuid.toString(), prefix)
     }
 
@@ -25,6 +25,10 @@ object PlayerInfoSaveRepository {
 
     suspend fun addPrefix(uuid: UUID, prefix: String) {
         PlayerInfoSaveLocalDataSource.addPrefix(uuid.toString(), prefix)
+    }
+
+    suspend fun removePrefix(uuid: UUID, prefix: String) {
+        PlayerInfoSaveLocalDataSource.removePrefix(uuid.toString(), prefix)
     }
 
     suspend fun saveMoney(uuid: UUID, money: Int) {

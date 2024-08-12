@@ -25,6 +25,12 @@ commands:
       - 칭호보기
     permission: y_plugin.showprefix
 
+  removeprefix:
+    description: 대상이 보유중인 칭호를 삭제합니다.
+    aliases:
+      - 칭호제거
+    permission: y_plugin.removeprefix
+
   tp:
     description: 대상을 이동시키거나 대상에게 이동합니다.
     permission: y_plugin.tp
@@ -50,6 +56,24 @@ commands:
     aliases:
       - 돈보내기
 
+  addmoney:
+    description: 대상에게 돈을 추가합니다.
+    permission: y_plugin.addmoney
+    aliases:
+      - 돈추가
+
+  minusmoney:
+    description: 대상의 돈을 뺍니다.
+    permission: y_plugin.minusmoney
+    aliases:
+      - 돈빼기
+
+  setmoney:
+    description: 대상의 돈을 설정합니다.
+    permission: y_plugin.setmoney
+    aliases:
+      - 돈설정
+
 permissions:
   y_plugin.nickchange:
     description: nickchange 권한
@@ -62,6 +86,10 @@ permissions:
   y_plugin.showprefix:
     description: prefix 권한
     default: not op
+
+  y_plugin.removeprefix:
+    description: removeprefix 권한
+    default: op
 
   y_plugin.tp:
     description: tp 권한
@@ -83,14 +111,30 @@ permissions:
     description: sendmoney 권한
     default: not op
 
+  y_plugin.addmoney:
+    description: addmoney 권한
+    default: op
+
+  y_plugin.minusmoney:
+    description: minusmoney 권한
+    default: op
+
+  y_plugin.setmoney:
+    description: setmoney 권한
+    default: op
+
   y_plugin.*:
     default: op
     children:
       y_plugin.nickchange: true
       y_plugin.setprefix: true
       y_plugin.showprefix: true
+      y_plugin.removeprefix: true
       y_plugin.tp: true
       y_plugin.openinv: true
       y_plugin.fly: true
       y_plugin.money: true
       y_plugin.sendmoney: true
+      y_plugin.addmoney: true
+      y_plugin.minusmoney: true
+      y_plugin.setmoney: true

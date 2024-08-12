@@ -49,63 +49,49 @@ class Main : JavaPlugin() {
         registerCommand(CHANGE_NICKNAME, ChangeNickName)
         registerCommand(ADD_PREFIX, Prefix)
         registerCommand(PREFIX, Prefix)
+        registerCommand(REMOVE_PREFIX, Prefix)
         registerCommand(TELEPORT, Teleport)
         registerCommand(OPEN_INVENTORY, OpenInventory)
         registerCommand(FLY, Fly)
         registerCommand(MONEY, Money)
         registerCommand(SEND_MONEY, Money)
-//        server.getPluginCommand(TELEPORT)?.tabCompleter = TabCompleter { sender, command, label, args ->
-//            log("sender = $sender, command = $command, label = $label, args = ${args.joinToString("/")}")
-//            val list = mutableListOf<String>()
-//            list.addAll(args)
-//            list.addAll(PlayerManager.onLinePlayerList.map { it.getNonColorNick() })
-//            list
-//        }
+        registerCommand(ADD_MONEY, Money)
+        registerCommand(MINUS_MONEY, Money)
+        registerCommand(SET_MONEY, Money)
     }
 
     private fun registerCommandsTab() {
-        registerTab(ADD_PREFIX) { sender, command, label, args ->
+        registerSameTabList(listOf(ADD_PREFIX, OPEN_INVENTORY, MONEY, SEND_MONEY, ADD_MONEY, MINUS_MONEY, SET_MONEY)) { _, _, _, args ->
             val tabList = mutableListOf<String>()
             if (args.size == 1) {
-                tabList.addAll(PlayerManager.onLinePlayerList.map { it.displayNick.toNonColorString() })
+                tabList.addAll(PlayerManager.onLinePlayerList.map { it.getNonColorNick() })
                 tabList.addAll(PlayerManager.onLinePlayerList.map { it.player.name })
+            }
+            tabList
+        }
+        registerTab(REMOVE_PREFIX) { sender, command, label, args ->
+            val tabList = mutableListOf<String>()
+            if (args.size == 1) {
+                tabList.addAll(PlayerManager.onLinePlayerList.map { it.getNonColorNick() })
+                tabList.addAll(PlayerManager.onLinePlayerList.map { it.player.name })
+            } else if (args.size == 2) {
+                val targetPlayer = PlayerManager.findPlayer(args[0])
+                if (targetPlayer != null) {
+                    tabList.addAll(targetPlayer.prefixList.map { it.toNonColorString() })
+                }
             }
             tabList
         }
         registerTab(TELEPORT) { sender, command, label, args ->
             val tabList = mutableListOf<String>()
             if (args.size == 1) {
-                tabList.addAll(PlayerManager.onLinePlayerList.map { it.displayNick.toNonColorString() })
+                tabList.addAll(PlayerManager.onLinePlayerList.map { it.getNonColorNick() })
                 tabList.addAll(PlayerManager.onLinePlayerList.map { it.player.name })
             } else if (args.size == 2) {
                 if (PlayerManager.findPlayer(args[0]) != null) {
-                    tabList.addAll(PlayerManager.onLinePlayerList.map { it.displayNick.toNonColorString() })
+                    tabList.addAll(PlayerManager.onLinePlayerList.map { it.getNonColorNick() })
                     tabList.addAll(PlayerManager.onLinePlayerList.map { it.player.name })
                 }
-            }
-            tabList
-        }
-        registerTab(SEND_MONEY) { sender, command, label, args ->
-            val tabList = mutableListOf<String>()
-            if (args.size == 1) {
-                tabList.addAll(PlayerManager.onLinePlayerList.map { it.displayNick.toNonColorString() })
-                tabList.addAll(PlayerManager.onLinePlayerList.map { it.player.name })
-            }
-            tabList
-        }
-        registerTab(OPEN_INVENTORY) { sender, command, label, args ->
-            val tabList = mutableListOf<String>()
-            if (args.size == 1) {
-                tabList.addAll(PlayerManager.onLinePlayerList.map { it.displayNick.toNonColorString() })
-                tabList.addAll(PlayerManager.onLinePlayerList.map { it.player.name })
-            }
-            tabList
-        }
-        registerTab(MONEY) { sender, command, label, args ->
-            val tabList = mutableListOf<String>()
-            if (args.size == 1) {
-                tabList.addAll(PlayerManager.onLinePlayerList.map { it.displayNick.toNonColorString() })
-                tabList.addAll(PlayerManager.onLinePlayerList.map { it.player.name })
             }
             tabList
         }
@@ -117,5 +103,11 @@ class Main : JavaPlugin() {
 
     private fun registerTab(command: String, tabCompleter: TabCompleter) {
         server.getPluginCommand(command)?.tabCompleter = tabCompleter
+    }
+
+    private fun registerSameTabList(commands: List<String>, tabCompleter: TabCompleter) {
+        commands.forEach { command ->
+            registerTab(command, tabCompleter)
+        }
     }
 }

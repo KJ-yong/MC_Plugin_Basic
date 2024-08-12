@@ -22,22 +22,11 @@ object ChangeNickName: CommandExecutor {
             val targetPlayerInfo = PlayerManager.onLinePlayerList.find { it.player.name == target }
             if (targetPlayerInfo == null) sender.sendMessage("대상 플레이어가 접속 중이지 않거나 존재하지 않습니다.")
             else {
-                targetPlayerInfo.displayNick = setNick
-                setNick(targetPlayerInfo)
-                Main.ioScope.launch {
-                    PlayerInfoSaveRepository.saveNickName(targetPlayerInfo.player.uniqueId, setNick)
-                }
+                targetPlayerInfo.changeDisplayNick(setNick)
                 sender.sendMessage("${target}의 닉네임이 ${setNick.toColorString()}${"&r".toColorString()}(으)로 변경되었습니다.")
                 targetPlayerInfo.player.sendMessage("당신의 닉네임이 ${setNick.toColorString()}${"&r".toColorString()}(으)로 변경되었습니다.")
             }
         }
         return true
-    }
-
-    fun setNick(playerInfo: PlayerInfo) {
-        val nameComponent = if (playerInfo.currentPrefix.isNotBlank()) "${playerInfo.currentPrefix}&r ${playerInfo.displayNick}&r".toColoredComponent()
-        else playerInfo.displayNick.toColoredComponent()
-        playerInfo.player.displayName(nameComponent)
-        playerInfo.player.playerListName(nameComponent)
     }
 }
